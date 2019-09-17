@@ -1,0 +1,3 @@
+recursive-include pretalx_tsv_export/static *
+recursive-include pretalx_tsv_export/templates *
+recursive-include pretalx_tsv_export/locale *
