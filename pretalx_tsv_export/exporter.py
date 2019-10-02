@@ -15,7 +15,7 @@ class TSVExporter(BaseExporter):
 
         for talk in self.event.current_schedule.talks.all():
             content.write(
-f"""{talk.start}\t\u2012\t{talk.real_end}\t{talk.submission_type.name}
+f"""{talk.start}\t\u2012\t{talk.real_end}\t{talk.submission.submission_type.name}
 {talk.submission.title}
 {talk.submission.display_speaker_names}
 """)
