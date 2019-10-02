@@ -14,7 +14,7 @@ class TSVExporter(BaseExporter):
         content = io.StringIO()
         tz = self.event.tz
 
-        for talk in self.event.current_schedule.talks.all():
+        for talk in self.event.current_schedule.talks.all().order_by('start'):
             if not talk.start or not talk.real_end:
                 continue
 
