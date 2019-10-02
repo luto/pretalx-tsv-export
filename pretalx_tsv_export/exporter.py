@@ -15,6 +15,9 @@ class TSVExporter(BaseExporter):
         tz = self.event.tz
 
         for talk in self.event.current_schedule.talks.all():
+            if not talk.start or not talk.real_end:
+                continue
+
             content.write(
 f"""{talk.start.astimezone(tz):%H.%M}\t\u2012\t{talk.real_end.astimezone(tz):%H.%M}\t{talk.submission.submission_type.name}
 {talk.submission.title}
