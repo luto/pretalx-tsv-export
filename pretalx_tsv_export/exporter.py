@@ -12,19 +12,11 @@ class TSVExporter(BaseExporter):
 
     def render(self, **kwargs):
         content = io.StringIO()
-        writer = csv.DictWriter(content, fieldnames=['start', 'end', 'duration', 'room', 'title', 'speakers'], delimiter='\t')
-        writer.writeheader()
 
         for talk in self.event.current_schedule.talks.all():
-            writer.writerow(
-                {
-                    'start': talk.start,
-                    'end': talk.real_end,
-                    'duration': talk.duration,
-                    'room': str(talk.room),
-                    'title': talk.submission.title,
-                    'speakers': talk.submission.display_speaker_names,
-                }
-            )
-
+            content.write(
+f"""{talk.start}\t\u2012\t{talk.real_end}\t{talk.submission_type.name}
+{talk.submission.title}
+{talk.submission.display_speaker_names}
+""")
         return (f'{self.event.slug}-schedule.tsv', 'text/plain', content.getvalue())
