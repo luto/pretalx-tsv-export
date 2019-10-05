@@ -19,8 +19,13 @@ class TSVExporter(BaseExporter):
                 continue
 
             content.write(
-f"""{talk.start.astimezone(tz):%H.%M}\t\u2013\t{talk.real_end.astimezone(tz):%H.%M}\t{talk.submission.submission_type.name}
-{talk.submission.title}
-{talk.submission.display_speaker_names}
-""")
+                '\t'.join(map(str, [
+                    talk.room.name,
+                    f'{talk.start.astimezone(tz):%H.%M}\u2013{talk.real_end.astimezone(tz):%H.%M}',
+                    talk.submission.title,
+                    talk.submission.display_speaker_names,
+                    talk.submission.submission_type.name,
+                ])) + '\n'
+            )
+
         return (f'{self.event.slug}-schedule.tsv', 'text/plain', content.getvalue())
